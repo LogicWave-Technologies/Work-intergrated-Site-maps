@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Site Map — Andiswa Business Consultations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#101B2B;
+    --navy:#1B2A41;
+    --navy-mid:#24384F;
+    --steel:#3E6690;
+    --steel-light:#5B8DB8;
+    --ink-muted:#5B6472;
+    --paper:#F7F8FA;
+    --paper-card:#FFFFFF;
+    --line:#DCE2E9;
+    --ok:#3E8E6F;
+    --lock:#B8863E;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--navy-mid);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    background:var(--navy-deep);
+    color:#EEF1F4;
+    padding:52px 24px 44px;
+    position:relative;
+    overflow:hidden;
+  }
+  header::after{
+    content:"";
+    position:absolute;
+    right:-80px; top:-80px;
+    width:280px; height:280px;
+    border:1px solid rgba(91,141,184,0.25);
+    border-radius:50%;
+  }
+  header::before{
+    content:"";
+    position:absolute;
+    right:20px; top:40px;
+    width:180px; height:180px;
+    border:1px solid rgba(91,141,184,0.18);
+    border-radius:50%;
+  }
+  .header-inner{max-width:1080px; margin:0 auto; position:relative; z-index:1;}
+  .brand-mark{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px; letter-spacing:0.02em;
+    color:var(--steel-light);
+    margin-bottom:22px;
+  }
+  .brand-mark .sq{
+    width:28px;height:28px;border-radius:7px;
+    background:var(--steel);
+    color:#fff; display:flex; align-items:center; justify-content:center;
+    font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:13px;
+  }
+  h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:clamp(28px,4vw,40px);
+    margin:0 0 12px;
+    max-width:14ch;
+  }
+  header p{
+    max-width:56ch;
+    color:#AEBBCB;
+    font-size:15px;
+    line-height:1.6;
+    margin:0;
+  }
+
+  /* ---------- Legend ---------- */
+  .legend{
+    max-width:1080px; margin:28px auto 0; padding:0 24px;
+    display:flex; flex-wrap:wrap; gap:22px;
+  }
+  .legend-item{
+    display:flex; align-items:center; gap:8px;
+    font-size:13px; color:var(--ink-muted);
+  }
+  .dot{width:9px;height:9px;border-radius:50%;flex:none;}
+  .dot.public{background:var(--steel-light);}
+  .dot.auth{background:var(--lock);}
+  .dot.data{background:#9AA5B1;}
+
+  /* ---------- Map ---------- */
+  main{max-width:1080px; margin:0 auto; padding:44px 24px 90px;}
+
+  .tree{display:flex; flex-direction:column; align-items:center;}
+
+  .root{
+    background:var(--navy-deep);
+    color:#fff;
+    padding:16px 26px;
+    border-radius:10px;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:15px;
+    letter-spacing:0.01em;
+    text-align:center;
+    box-shadow:0 8px 20px -8px rgba(16,27,43,0.4);
+  }
+  .root span{
+    display:block;
+    font-family:'JetBrains Mono',monospace;
+    font-weight:400;
+    font-size:11px;
+    color:var(--steel-light);
+    margin-top:4px;
+    letter-spacing:0.03em;
+  }
+
+  .drop{width:1px; height:34px; background:var(--line);}
+
+  .tier{
+    display:flex;
+    justify-content:center;
+    width:100%;
+    position:relative;
+    padding-top:34px;
+  }
+  .tier::before{
+    content:"";
+    position:absolute;
+    top:0; left:50%;
+    height:1px;
+    background:var(--line);
+  }
+  .tier.two-branch::before{ width:calc(50% - 4px); transform:translateX(-100%); }
+  .tier.two-branch .connector-right::before{
+    content:""; position:absolute; top:0; left:50%; width:calc(50% - 4px); height:1px; background:var(--line);
+  }
+
+  .branch{
+    display:flex; flex-direction:column; align-items:center;
+    flex:1; position:relative;
+  }
+  .branch::before{
+    content:"";
+    position:absolute; top:-34px; left:50%;
+    width:1px; height:34px; background:var(--line);
+  }
+
+  .node{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:14px;
+    padding:11px 18px;
+    border-radius:8px;
+    text-align:center;
+    cursor:default;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .node.section{
+    background:var(--navy);
+    color:#fff;
+    letter-spacing:0.01em;
+  }
+  .node.section small{
+    display:block; font-family:'JetBrains Mono',monospace; font-weight:400;
+    font-size:10.5px; color:#9FB3C8; margin-top:3px; letter-spacing:0.02em;
+  }
+
+  .leaves{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:14px;
+    margin-top:30px; position:relative; max-width:920px;
+  }
+  .leaves::before{
+    content:""; position:absolute; top:-16px; left:50%; width:1px; height:16px; background:var(--line);
+  }
+
+  .leaf{
+    background:var(--paper-card);
+    border:1px solid var(--line);
+    border-radius:9px;
+    padding:14px 16px;
+    min-width:150px;
+    text-align:left;
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  }
+  .leaf:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 22px -12px rgba(16,27,43,0.28);
+    border-color:var(--steel-light);
+  }
+  .leaf-top{display:flex; align-items:center; gap:8px; margin-bottom:5px;}
+  .leaf .dot{flex:none;}
+  .leaf-name{
+    font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13.5px; color:var(--navy-deep);
+  }
+  .leaf-path{
+    font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--ink-muted);
+    display:block; margin-top:1px;
+  }
+  .leaf-note{
+    font-size:11.5px; color:var(--ink-muted); margin-top:6px; line-height:1.4;
+  }
+
+  /* auth flow */
+  .authflow{
+    max-width:1080px; margin:70px auto 0; padding:0 24px;
+  }
+  .authflow h2{
+    font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:600; color:var(--navy-deep);
+    margin:0 0 6px;
+  }
+  .authflow > p{font-size:13.5px; color:var(--ink-muted); margin:0 0 26px; max-width:60ch;}
+
+  .flow-row{
+    display:flex; align-items:stretch; gap:0; flex-wrap:wrap; justify-content:center;
+  }
+  .flow-card{
+    background:var(--paper-card);
+    border:1px solid var(--line);
+    border-radius:9px;
+    padding:16px 18px;
+    width:220px;
+    text-align:left;
+  }
+  .flow-card .leaf-name{font-size:13.5px;}
+  .flow-arrow{
+    display:flex; align-items:center; justify-content:center;
+    width:46px; color:var(--ink-muted); font-size:16px; flex:none;
+  }
+  .flow-fork{display:flex; flex-direction:column; gap:12px; justify-content:center;}
+
+  .tab-list{
+    margin-top:10px; padding-top:10px; border-top:1px dashed var(--line);
+    display:flex; flex-direction:column; gap:6px;
+  }
+  .tab-list span{
+    font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--steel);
+  }
+
+  footer{
+    max-width:1080px; margin:0 auto; padding:20px 24px 60px;
+    font-size:12px; color:var(--ink-muted);
+    border-top:1px solid var(--line); margin-top:60px; padding-top:22px;
+  }
+
+  @media (max-width:720px){
+    .flow-row{flex-direction:column; align-items:center;}
+    .flow-arrow{transform:rotate(90deg); width:auto; height:30px;}
+    .leaves{gap:10px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand-mark"><span class="sq">AB</span> ANDISWA BUSINESS CONSULTATIONS</div>
+    <h1>Site map</h1>
+    <p>Structure of the PHP / MySQL site — public marketing pages, the quote-request flow, and the role-based login gateway into the client portal and admin console.</p>
+  </div>
+</header>
+
+<div class="legend">
+  <div class="legend-item"><span class="dot public"></span>Public page</div>
+  <div class="legend-item"><span class="dot auth"></span>Requires login</div>
+  <div class="legend-item"><span class="dot data"></span>Script / data (no UI page)</div>
+</div>
+
+<main>
+  <div class="tree">
+    <div class="root">Andiswa Business Consultations<span>index.html — site root</span></div>
+    <div class="drop"></div>
+
+    <!-- Public leaves -->
+    <div class="leaves" id="public-leaves"></div>
+
+    <!-- Auth flow -->
+    <div class="authflow">
+      <h2>Login &amp; secure areas</h2>
+      <p>login.php checks the account role on sign-in and routes the user to one of two separate areas — the client can only ever reach their own dashboard, and only an admin account reaches the console.</p>
+
+      <div class="flow-row">
+        <div class="flow-card">
+          <div class="leaf-top"><span class="dot public"></span><span class="leaf-name">Login</span></div>
+          <span class="leaf-path">login.php</span>
+          <div class="leaf-note">Single sign-in form. Role is read from the session on success.</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-fork">
+          <div class="flow-card">
+            <div class="leaf-top"><span class="dot auth"></span><span class="leaf-name">Client Dashboard</span></div>
+            <span class="leaf-path">dashboard.php</span>
+            <div class="leaf-note">Role: client. Own quotes &amp; project status.</div>
+          </div>
+          <div class="flow-card">
+            <div class="leaf-top"><span class="dot auth"></span><span class="leaf-name">Admin Console</span></div>
+            <span class="leaf-path">admin.php</span>
+            <div class="leaf-note">Role: admin.</div>
+            <div class="tab-list">
+              <span>?tab=dashboard</span>
+              <span>?tab=clients</span>
+              <span>?tab=projects</span>
+              <span>?tab=quotes</span>
+            </div>
+          </div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-card">
+          <div class="leaf-top"><span class="dot public"></span><span class="leaf-name">Logout</span></div>
+          <span class="leaf-path">logout.php</span>
+          <div class="leaf-note">Destroys the session, returns to index.html.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Backend scripts -->
+    <div class="authflow">
+      <h2>Supporting scripts</h2>
+      <p>Not user-facing pages — handle form submissions, database setup, and shared configuration.</p>
+      <div class="leaves" id="script-leaves" style="margin-top:16px;"></div>
+    </div>
+  </div>
+</main>
+
+<footer>Generated site map — Andiswa Business Consultations (PHP / MySQL, XAMPP). See <code>sitemap.xml</code> for the crawlable version of the public pages.</footer>
+
+<script>
+  const publicPages = [
+    {name:"Home", path:"index.html", note:"Hero, services preview, portfolio teaser."},
+    {name:"About Us", path:"about.html", note:"Agency story and mission."},
+    {name:"Services", path:"services.html", note:"Service catalogue."},
+    {name:"Projects", path:"projects.html", note:"Portfolio grid — posters, flyers, branding."},
+    {name:"Team", path:"team.html", note:"Team profiles."},
+    {name:"Testimonials", path:"testimonials.html", note:"Client testimonials."},
+    {name:"Contact", path:"contact.php", note:"Contact form + quote request."},
+  ];
+
+  const scripts = [
+    {name:"Submit Quote", path:"submit_quote.php", type:"data", note:"Handles the quote form POST."},
+    {name:"Config", path:"config.php", type:"data", note:"DB connection settings."},
+    {name:"Setup", path:"setup.php", type:"data", note:"First-run DB/table setup."},
+    {name:"Database schema", path:"database.sql", type:"data", note:"MySQL schema."},
+  ];
+
+  function renderLeaves(container, items, dotClass){
+    const el = document.getElementById(container);
+    el.innerHTML = items.map(i => `
+      <div class="leaf">
+        <div class="leaf-top"><span class="dot ${dotClass}"></span><span class="leaf-name">${i.name}</span></div>
+        <span class="leaf-path">${i.path}</span>
+        <div class="leaf-note">${i.note}</div>
+      </div>
+    `).join("");
+  }
+
+  renderLeaves("public-leaves", publicPages, "public");
+  renderLeaves("script-leaves", scripts, "data");
+</script>
+
+</body>
+</html>
